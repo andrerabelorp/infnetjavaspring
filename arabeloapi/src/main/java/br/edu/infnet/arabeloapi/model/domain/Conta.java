@@ -2,15 +2,18 @@ package br.edu.infnet.arabeloapi.model.domain;
 
 public class Conta {
     int id;
-    InstituicaoFinanceira instituicaoFinanceira;
+    int codigoBanco;
     TipoConta tipoConta;
     Long numero;
     String digitoVerificador;
     double saldoAtual;
     boolean ativo;
 
-    public Conta(InstituicaoFinanceira instituicaoFinanceira, TipoConta tipoConta, Long numero, String digitoVerificador) {
-        this.instituicaoFinanceira = instituicaoFinanceira;
+    public Conta() {
+        super();
+    }
+
+    public Conta(TipoConta tipoConta, Long numero, String digitoVerificador) {
         this.tipoConta = tipoConta;
         this.numero = numero;
         this.digitoVerificador = digitoVerificador;
@@ -19,7 +22,7 @@ public class Conta {
 
     @Override
     public String toString() {
-        return String.format("Conta ID %d, instituição [%s], saldo %f.", getId(), instituicaoFinanceira.toString(), getSaldoAtual());
+        return String.format("Conta ID %d, instituição [%s], saldo %f.", getId(), codigoBanco, getSaldoAtual());
     }
 
     public int getId() {
@@ -30,12 +33,12 @@ public class Conta {
         this.id = id;
     }
 
-    public InstituicaoFinanceira getInstituicaoFinanceira() {
-        return instituicaoFinanceira;
+    public int getCodigoBanco() {
+        return codigoBanco;
     }
 
-    public void setInstituicaoFinanceira(InstituicaoFinanceira instituicaoFinanceira) {
-        this.instituicaoFinanceira = instituicaoFinanceira;
+    public void setCodigoBanco(int codigoBanco) {
+        this.codigoBanco = codigoBanco;
     }
 
     public TipoConta getTipoConta() {

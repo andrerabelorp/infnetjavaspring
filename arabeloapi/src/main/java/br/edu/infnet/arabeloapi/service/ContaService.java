@@ -1,5 +1,6 @@
 package br.edu.infnet.arabeloapi.service;
 
+import br.edu.infnet.arabeloapi.model.domain.Banco;
 import br.edu.infnet.arabeloapi.model.domain.Conta;
 import br.edu.infnet.arabeloapi.model.domain.TipoConta;
 import org.springframework.stereotype.Service;
@@ -28,11 +29,15 @@ public class ContaService implements CrudService<Conta, Integer> {
         Conta conta = new Conta();
 
         conta.setId(1);
-        conta.setCodigoBanco(341);
         conta.setNumero(12345L);
         conta.setTipoConta(TipoConta.CORRENTE);
         conta.setAtivo(true);
         conta.setSaldoAtual(135.76);;
+
+        Banco banco = new Banco();
+        banco.setIdBacen(341);
+        banco.setNome("Itaú");
+        conta.setBanco(banco);
 
         return conta;
     }

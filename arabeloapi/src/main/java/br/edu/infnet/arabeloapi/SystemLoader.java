@@ -35,7 +35,6 @@ public class SystemLoader implements ApplicationRunner {
             Conta conta = new Conta();
 
             conta.setId(Integer.valueOf(campos[0]));
-            conta.setCodigoBanco(Integer.valueOf(campos[1]));
             conta.setNumero(Long.valueOf(campos[2]));
             conta.setSaldoAtual(Double.valueOf(campos[3]));
             conta.setAtivo(Boolean.valueOf(campos[4]));

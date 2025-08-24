@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class BaseCrudService<T, ID> {
+public abstract class BaseCrudService<T extends Object, ID> implements CrudService<T, ID> {
 
     protected final Map<ID, T> dados = new ConcurrentHashMap<>();
 
@@ -14,7 +14,17 @@ public abstract class BaseCrudService<T, ID> {
     }
 
     public T obter(ID id) {
-        return dados.get(id);
+        T entidade = dados.get(id);
+
+        if (entidade == null) {
+            throw new IllegalArgumentException(String.format("Entidade [%s] não encontrada pelo ID.", getEntityTypeName()));
+        }
+
+        return entidade;
     }
 
+    public T salvar(T entidade) {
+        dados.put(obterIdNovaEntidade(entidade), entidade);
+        return entidade;
+    }
 }

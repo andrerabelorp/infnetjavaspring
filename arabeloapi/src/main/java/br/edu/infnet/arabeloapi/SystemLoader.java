@@ -24,11 +24,11 @@ public class SystemLoader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        lerBancos();
-        lerContas();
+        carregarBancos();
+        carregarContas();
     }
 
-    public void lerBancos() throws Exception {
+    public void carregarBancos() throws Exception {
         FileReader arquivo = new FileReader("bancos.txt");
         BufferedReader leitor = new BufferedReader(arquivo);
 
@@ -38,12 +38,16 @@ public class SystemLoader implements ApplicationRunner {
             campos = linha.split(";");
 
             Banco banco = new Banco();
-            banco.setIdBacen(Integer.valueOf(campos[0]));
-            banco.setNome(campos[1]);
+            try {
+                banco.setIdBacen(Integer.valueOf(campos[0]));
+                banco.setNome(campos[1]);
 
-            System.out.print("- Salvando banco... ");
-            Banco bancoSalva = bancoCrudService.salvar(banco);
-            System.out.println(String.format("Banco salvo, ID %d!", bancoSalva.getIdBacen()));
+                System.out.print("- Salvando banco... ");
+                Banco bancoSalva = bancoCrudService.salvar(banco);
+                System.out.println(String.format("Banco salvo, ID %d!", bancoSalva.getIdBacen()));
+            } catch (Exception e) {
+                System.out.println(String.format("Erro ao salvar banco: [%s].", banco));
+            }
 
             linha = leitor.readLine();
         }
@@ -53,7 +57,7 @@ public class SystemLoader implements ApplicationRunner {
         leitor.close();
     }
     
-    public void lerContas() throws Exception {
+    public void carregarContas() throws Exception {
         FileReader arquivo = new FileReader("contas.txt");
         BufferedReader leitor = new BufferedReader(arquivo);
 
@@ -63,6 +67,7 @@ public class SystemLoader implements ApplicationRunner {
             campos = linha.split(";");
 
             Conta conta = new Conta();
+            try {
             conta.setId(Integer.valueOf(campos[0]));
             conta.setBanco(bancoCrudService.obter(Integer.valueOf(campos[1])));
             conta.setNumero(Long.valueOf(campos[2]));
@@ -72,6 +77,9 @@ public class SystemLoader implements ApplicationRunner {
             System.out.print("- Salvando conta... ");
             Conta contaSalva = contaCrudService.salvar(conta);
             System.out.println(String.format("Conta salva, ID %d!", contaSalva.getId()));
+            } catch (Exception e) {
+                System.out.println(String.format("Erro ao salvar conta: [%s].", conta));
+            }
 
             linha = leitor.readLine();
         }

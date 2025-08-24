@@ -1,0 +1,59 @@
+{
+	"info": {
+		"_postman_id": "dede9460-a548-4116-b396-56d36ecf3d7a",
+		"name": "Infnet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1755327",
+		"_collection_link": "https://myself-0695.postman.co/workspace/Team-Workspace~b54cd5f9-1f7a-415c-8e80-68e7f84aa780/collection/1755327-dede9460-a548-4116-b396-56d36ecf3d7a?action=share&source=collection_link&creator=1755327"
+	},
+	"item": [
+		{
+			"name": "Contas",
+			"item": [
+				{
+					"name": "GET /{id}",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/contas/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"contas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/contas",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

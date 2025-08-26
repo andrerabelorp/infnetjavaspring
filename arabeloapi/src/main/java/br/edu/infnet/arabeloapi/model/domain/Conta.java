@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Conta {
-    private int id;
+public class Conta implements EntidadeComId<Integer> {
+    private Integer id;
     private Banco banco;
     private TipoConta tipoConta;
     private Long numero;

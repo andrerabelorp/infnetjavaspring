@@ -2,7 +2,9 @@ package br.edu.infnet.arabeloapi.service;
 
 import br.edu.infnet.arabeloapi.model.domain.Conta;
 import br.edu.infnet.arabeloapi.model.domain.exceptions.CampoObrigatorioNaoPreenchidoException;
+import br.edu.infnet.arabeloapi.model.domain.exceptions.OperacaoNaoPermitidaException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -26,9 +28,9 @@ public class ContaCrudService extends BaseCrudService<Conta, Integer> implements
         if (entidade == null) {
             throw new IllegalArgumentException("Impossível validar entidade \"null\".");
         }
-        if (entidade.getBanco() == null) {
-            throw new CampoObrigatorioNaoPreenchidoException("Banco", "Conta");
-        }
+//        if (entidade.getBanco() == null) {
+//            throw new CampoObrigatorioNaoPreenchidoException("Banco", "Conta");
+//        }
         if (entidade.getNumero() == null) {
             throw new CampoObrigatorioNaoPreenchidoException("Número", "Conta");
         }
@@ -40,6 +42,13 @@ public class ContaCrudService extends BaseCrudService<Conta, Integer> implements
     @Override
     public String getEntityTypeName() {
         return "Conta";
+    }
+
+    @Override
+    public void validarIdEstaVazio(Integer id) {
+        if (!ObjectUtils.isEmpty(id)) {
+            throw new OperacaoNaoPermitidaException();
+        }
     }
 
 }

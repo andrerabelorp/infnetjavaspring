@@ -1,11 +1,14 @@
 package br.edu.infnet.arabeloapi.service;
 
+import br.edu.infnet.arabeloapi.model.domain.EntidadeComId;
+import org.springframework.util.ObjectUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class BaseCrudService<T extends Object, ID> implements CrudService<T, ID> {
+public abstract class BaseCrudService<T extends EntidadeComId<ID>, ID> implements CrudService<T, ID> {
 
     protected final Map<ID, T> dados = new ConcurrentHashMap<>();
 
@@ -23,7 +26,9 @@ public abstract class BaseCrudService<T extends Object, ID> implements CrudServi
         return entidade;
     }
 
-    public T salvar(T entidade) {
+    public T incluir(T entidade) {
+        validarIdEstaVazio(entidade.getId());
+        validarEntidade(entidade);
         dados.put(obterIdNovaEntidade(entidade), entidade);
         return entidade;
     }

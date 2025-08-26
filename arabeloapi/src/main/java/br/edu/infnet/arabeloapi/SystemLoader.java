@@ -2,6 +2,7 @@ package br.edu.infnet.arabeloapi;
 
 import br.edu.infnet.arabeloapi.model.domain.Banco;
 import br.edu.infnet.arabeloapi.model.domain.Conta;
+import br.edu.infnet.arabeloapi.model.domain.TipoConta;
 import br.edu.infnet.arabeloapi.service.BancoCrudService;
 import br.edu.infnet.arabeloapi.service.ContaCrudService;
 import org.springframework.boot.ApplicationArguments;
@@ -43,7 +44,7 @@ public class SystemLoader implements ApplicationRunner {
                 banco.setNome(campos[1]);
 
                 System.out.print("- Salvando banco... ");
-                Banco bancoSalva = bancoCrudService.salvar(banco);
+                Banco bancoSalva = bancoCrudService.incluir(banco);
                 System.out.println(String.format("Banco salvo, ID %d!", bancoSalva.getIdBacen()));
             } catch (Exception e) {
                 System.out.println(String.format("Erro ao salvar banco: [%s].", banco));
@@ -68,17 +69,19 @@ public class SystemLoader implements ApplicationRunner {
 
             Conta conta = new Conta();
             try {
-            conta.setId(Integer.valueOf(campos[0]));
+            conta.setId(null);
             conta.setBanco(bancoCrudService.obter(Integer.valueOf(campos[1])));
             conta.setNumero(Long.valueOf(campos[2]));
             conta.setSaldoAtual(Double.valueOf(campos[3]));
             conta.setAtivo(Boolean.valueOf(campos[4]));
+            conta.setTipoConta(TipoConta.CORRENTE);
 
             System.out.print("- Salvando conta... ");
-            Conta contaSalva = contaCrudService.salvar(conta);
+            Conta contaSalva = contaCrudService.incluir(conta);
             System.out.println(String.format("Conta salva, ID %d!", contaSalva.getId()));
             } catch (Exception e) {
                 System.out.println(String.format("Erro ao salvar conta: [%s].", conta));
+                System.out.println(e.getMessage());
             }
 
             linha = leitor.readLine();

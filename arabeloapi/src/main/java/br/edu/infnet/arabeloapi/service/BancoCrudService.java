@@ -3,6 +3,9 @@ package br.edu.infnet.arabeloapi.service;
 import br.edu.infnet.arabeloapi.model.domain.Banco;
 import br.edu.infnet.arabeloapi.model.domain.exceptions.CampoObrigatorioNaoPreenchidoException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+
+import java.awt.dnd.InvalidDnDOperationException;
 
 @Service
 public class BancoCrudService extends BaseCrudService<Banco, Integer> implements CrudService<Banco, Integer> {
@@ -13,7 +16,7 @@ public class BancoCrudService extends BaseCrudService<Banco, Integer> implements
     }
 
     @Override
-    public Banco salvar(Banco entidade) {
+    public Banco incluir(Banco entidade) {
         dados.put(entidade.getIdBacen(), entidade);
         return entidade;
     }
@@ -39,5 +42,12 @@ public class BancoCrudService extends BaseCrudService<Banco, Integer> implements
     @Override
     public String getEntityTypeName() {
         return "Banco";
+    }
+
+    @Override
+    public void validarIdEstaVazio(Integer ID) {
+        if (ObjectUtils.isEmpty(ID)) {
+            throw new InvalidDnDOperationException(String.format("Não é possível incluir entidade [%s] que já possui ID.", getEntityTypeName()));
+        }
     }
 }

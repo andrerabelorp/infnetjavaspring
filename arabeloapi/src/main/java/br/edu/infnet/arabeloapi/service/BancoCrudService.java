@@ -25,6 +25,9 @@ public class BancoCrudService extends BaseCrudService<Banco, Integer> implements
 
     @Override
     public void validarEntidade(Banco entidade) {
+        if (entidade == null) {
+            throw new IllegalArgumentException("Impossível validar entidade \"null\".");
+        }
         if (entidade.getIdBacen() <= 0) {
             throw new CampoObrigatorioNaoPreenchidoException("Código BACEN", "Banco");
         }

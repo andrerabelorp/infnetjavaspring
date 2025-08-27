@@ -1,5 +1,6 @@
 package br.edu.infnet.arabeloapi.service;
 
+import br.edu.infnet.arabeloapi.model.domain.Conta;
 import br.edu.infnet.arabeloapi.model.domain.EntidadeComId;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface CrudService<T extends EntidadeComId<ID>, ID> {
     void validarEntidade(T entidade);
     String getEntityTypeName();
     void validarIdEstaVazio(ID id);
+    T alterar(ID id, T entidade);
 }

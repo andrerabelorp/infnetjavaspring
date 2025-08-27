@@ -1,7 +1,6 @@
 package br.edu.infnet.arabeloapi.service;
 
 import br.edu.infnet.arabeloapi.model.domain.EntidadeComId;
-import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +27,17 @@ public abstract class BaseCrudService<T extends EntidadeComId<ID>, ID> implement
 
     public T incluir(T entidade) {
         validarIdEstaVazio(entidade.getId());
+        entidade.setId(obterIdNovaEntidade(entidade));
         validarEntidade(entidade);
-        dados.put(obterIdNovaEntidade(entidade), entidade);
+        dados.put(entidade.getId(), entidade);
+        return entidade;
+    }
+
+    public T alterar(ID id, T entidade) {
+        obter(id);
+        entidade.setId(id);
+        validarEntidade(entidade);
+        dados.put(entidade.getId(), entidade);
         return entidade;
     }
 }

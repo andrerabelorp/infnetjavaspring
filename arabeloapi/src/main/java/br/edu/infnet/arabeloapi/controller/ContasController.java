@@ -17,8 +17,13 @@ public class ContasController {
     }
 
     @PostMapping
-    public void incluir(Conta conta) {
-        contaCrudService.incluir(conta);
+    public Conta incluir(@RequestBody Conta conta) {
+        return contaCrudService.incluir(conta);
+    }
+
+    @PutMapping(value = "/{id}")
+    public Conta alterar(@PathVariable Integer id, @RequestBody Conta conta) {
+        return contaCrudService.alterar(id, conta);
     }
 
     @GetMapping

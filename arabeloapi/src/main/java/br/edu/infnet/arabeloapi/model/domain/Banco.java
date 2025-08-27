@@ -11,4 +11,9 @@ public class Banco implements EntidadeComId<Integer> {
     public Integer getId() {
         return idBacen;
     }
+
+    @Override
+    public void setId(Integer id) {
+        setIdBacen(id);
+    }
 }

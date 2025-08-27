@@ -11,6 +11,25 @@
 			"name": "Contas",
 			"item": [
 				{
+					"name": "GET",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/contas",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"contas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "GET /{id}",
 					"request": {
 						"auth": {
@@ -19,7 +38,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/contas/1",
+							"raw": "http://localhost:8080/api/contas/4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -28,32 +47,112 @@
 							"path": [
 								"api",
 								"contas",
-								"1"
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "incluir",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"banco\": {\r\n            \"idBacen\": 333,\r\n            \"nome\": \"Banco do xxx\"\r\n        },\r\n        \"tipoConta\": \"POUPANCA\",\r\n        \"numero\": 5678,\r\n        \"digitoVerificador\": \"1\",\r\n        \"saldoAtual\": 33.34,\r\n        \"ativo\": true\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/contas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"contas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alterar",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"banco\": {\r\n            \"idBacen\": 333,\r\n            \"nome\": \"Banco do yyy\"\r\n        },\r\n        \"tipoConta\": \"POUPANCA\",\r\n        \"numero\": 5678,\r\n        \"digitoVerificador\": \"1\",\r\n        \"saldoAtual\": 33.34,\r\n        \"ativo\": true\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/contas/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"contas",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "inativar",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"banco\": {\r\n            \"idBacen\": 333,\r\n            \"nome\": \"Banco do yyy\"\r\n        },\r\n        \"tipoConta\": \"POUPANCA\",\r\n        \"numero\": 5678,\r\n        \"digitoVerificador\": \"1\",\r\n        \"saldoAtual\": 33.34,\r\n        \"ativo\": true\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/contas/4/inativar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"contas",
+								"4",
+								"inativar"
 							]
 						}
 					},
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "GET",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/api/contas",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"contas"
-					]
-				}
-			},
-			"response": []
 		}
 	]
 }

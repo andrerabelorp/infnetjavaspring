@@ -34,10 +34,18 @@ public abstract class BaseCrudService<T extends EntidadeComId<ID>, ID> implement
     }
 
     public T alterar(ID id, T entidade) {
+        validarId(id);
         obter(id);
         entidade.setId(id);
         validarEntidade(entidade);
         dados.put(entidade.getId(), entidade);
         return entidade;
+    }
+
+    public void excluir(ID id) {
+        validarId(id);
+        T entidade = obter(id);
+        validarExclusao(entidade);
+        dados.remove(id);
     }
 }

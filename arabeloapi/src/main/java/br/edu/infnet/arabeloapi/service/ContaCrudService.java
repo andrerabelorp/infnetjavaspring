@@ -2,6 +2,7 @@ package br.edu.infnet.arabeloapi.service;
 
 import br.edu.infnet.arabeloapi.model.domain.Conta;
 import br.edu.infnet.arabeloapi.model.domain.exceptions.CampoObrigatorioNaoPreenchidoException;
+import br.edu.infnet.arabeloapi.model.domain.exceptions.EntidadeNaoPodeSerExcluidaException;
 import br.edu.infnet.arabeloapi.model.domain.exceptions.OperacaoNaoPermitidaException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -9,18 +10,13 @@ import org.springframework.util.ObjectUtils;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
-public class ContaCrudService extends BaseCrudService<Conta, Integer> implements CrudService<Conta, Integer> {
+public class ContaCrudService extends BaseCrudService<Conta, Integer> implements CrudService<Conta, Integer>, CrudAtivoService<Conta, Integer> {
 
     private AtomicInteger nextId = new AtomicInteger(1);
 
     @Override
     public Integer obterIdNovaEntidade(Conta entity) {
         return nextId.getAndIncrement();
-    }
-
-    @Override
-    public void excluir(Integer integer) {
-
     }
 
     @Override
@@ -51,4 +47,29 @@ public class ContaCrudService extends BaseCrudService<Conta, Integer> implements
         }
     }
 
+    @Override
+    public void validarId(Integer id) {
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException(String.format("ID inválido para Conta: [%s].", id));
+        }
+    }
+
+    @Override
+    public void validarExclusao(Conta entidade) {
+        if (!Double.valueOf(0.0).equals(entidade.getSaldoAtual())) {
+            throw new EntidadeNaoPodeSerExcluidaException("Conta");
+        }
+    }
+
+    @Override
+    public Conta inativar(Integer id) {
+        Conta conta = obter(id);
+        if (!conta.isAtivo()) {
+            System.out.println("Conta [" + conta + "] já está inativa!");
+        } else {
+            conta.setAtivo(false);
+            dados.put(id, conta);
+        }
+        return conta;
+    }
 }

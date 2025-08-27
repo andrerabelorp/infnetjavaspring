@@ -26,6 +26,16 @@ public class ContasController {
         return contaCrudService.alterar(id, conta);
     }
 
+    @PatchMapping(value = "/{id}/inativar")
+    public Conta inativar(@PathVariable Integer id) {
+        return contaCrudService.inativar(id);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void excluir(@PathVariable Integer id) {
+        contaCrudService.excluir(id);
+    }
+
     @GetMapping
     public List<Conta> getContas() {
         return contaCrudService.obter();

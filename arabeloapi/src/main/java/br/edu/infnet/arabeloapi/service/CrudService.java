@@ -15,4 +15,6 @@ public interface CrudService<T extends EntidadeComId<ID>, ID> {
     String getEntityTypeName();
     void validarIdEstaVazio(ID id);
     T alterar(ID id, T entidade);
+    void validarId(ID id);
+    void validarExclusao(T entidade);
 }

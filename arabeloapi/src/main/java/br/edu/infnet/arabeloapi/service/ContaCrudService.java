@@ -4,11 +4,16 @@ import br.edu.infnet.arabeloapi.model.domain.Conta;
 import br.edu.infnet.arabeloapi.model.domain.exceptions.CampoObrigatorioNaoPreenchidoException;
 import br.edu.infnet.arabeloapi.model.domain.exceptions.EntidadeNaoPodeSerExcluidaException;
 import br.edu.infnet.arabeloapi.model.domain.exceptions.OperacaoNaoPermitidaException;
+import br.edu.infnet.arabeloapi.repository.ContaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 @Service
 public class ContaCrudService extends BaseCrudService<Conta, Integer> implements CrudService<Conta, Integer>, CrudAtivoService<Conta, Integer> {
+
+    public ContaCrudService(ContaRepository contaRepository) {
+        this.repository = contaRepository;
+    }
 
     @Override
     public void validarEntidade(Conta entidade) {

@@ -1,6 +1,7 @@
 package br.edu.infnet.arabeloapi.service;
 
 import br.edu.infnet.arabeloapi.model.domain.EntidadeComId;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class BaseCrudService<T extends EntidadeComId<ID>, ID> implements CrudService<T, ID> {
 
+    protected JpaRepository<T, ID> repository;
     protected final Map<ID, T> dados = new ConcurrentHashMap<>();
+
+
 
     public List<T> obter() {
         return new ArrayList<>(dados.values());
@@ -28,8 +32,7 @@ public abstract class BaseCrudService<T extends EntidadeComId<ID>, ID> implement
     public T incluir(T entidade) {
         validarIdEstaVazio(entidade.getId());
         validarEntidade(entidade);
-        dados.put(entidade.getId(), entidade);
-        return entidade;
+        return repository.save(entidade);
     }
 
     public T alterar(ID id, T entidade) {

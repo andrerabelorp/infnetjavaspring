@@ -7,17 +7,8 @@ import br.edu.infnet.arabeloapi.model.domain.exceptions.OperacaoNaoPermitidaExce
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 @Service
 public class ContaCrudService extends BaseCrudService<Conta, Integer> implements CrudService<Conta, Integer>, CrudAtivoService<Conta, Integer> {
-
-    private AtomicInteger nextId = new AtomicInteger(1);
-
-    @Override
-    public Integer obterIdNovaEntidade(Conta entity) {
-        return nextId.getAndIncrement();
-    }
 
     @Override
     public void validarEntidade(Conta entidade) {

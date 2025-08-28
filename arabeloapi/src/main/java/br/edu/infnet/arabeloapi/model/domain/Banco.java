@@ -1,19 +1,21 @@
 package br.edu.infnet.arabeloapi.model.domain;
 
-import lombok.Data;
+import jakarta.persistence.Entity;
 
-@Data
-public class Banco implements EntidadeComId<Integer> {
-    private int idBacen;
-    private String nome;
+@Entity
+public class Banco extends Pessoa implements EntidadeComId<Integer> {
 
     @Override
-    public Integer getId() {
-        return idBacen;
+    public String toString() {
+        return String.format("Banco:{id:%d,nome:%s}", getId(), getNome());
+    }
+
+    public Integer getCodigoBacen() {
+        return getId();
     }
 
     @Override
     public void setId(Integer id) {
-        setIdBacen(id);
+
     }
 }

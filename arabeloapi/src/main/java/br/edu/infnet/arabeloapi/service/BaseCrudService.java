@@ -27,7 +27,6 @@ public abstract class BaseCrudService<T extends EntidadeComId<ID>, ID> implement
 
     public T incluir(T entidade) {
         validarIdEstaVazio(entidade.getId());
-        entidade.setId(obterIdNovaEntidade(entidade));
         validarEntidade(entidade);
         dados.put(entidade.getId(), entidade);
         return entidade;

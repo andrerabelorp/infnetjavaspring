@@ -12,13 +12,8 @@ import java.awt.dnd.InvalidDnDOperationException;
 public class BancoCrudService extends BaseCrudService<Banco, Integer> implements CrudService<Banco, Integer> {
 
     @Override
-    public Integer obterIdNovaEntidade(Banco entity) {
-        return entity.getIdBacen();
-    }
-
-    @Override
     public Banco incluir(Banco entidade) {
-        dados.put(entidade.getIdBacen(), entidade);
+        dados.put(entidade.getCodigoBacen(), entidade);
         return entidade;
     }
 
@@ -27,7 +22,7 @@ public class BancoCrudService extends BaseCrudService<Banco, Integer> implements
         if (entidade == null) {
             throw new IllegalArgumentException("Impossível validar entidade \"null\".");
         }
-        if (entidade.getIdBacen() <= 0) {
+        if (entidade.getCodigoBacen() <= 0) {
             throw new CampoObrigatorioNaoPreenchidoException("Código BACEN", "Banco");
         }
         if (entidade.getNome() == null) {

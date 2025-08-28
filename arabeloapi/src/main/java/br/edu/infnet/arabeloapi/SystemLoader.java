@@ -40,12 +40,12 @@ public class SystemLoader implements ApplicationRunner {
 
             Banco banco = new Banco();
             try {
-                banco.setIdBacen(Integer.valueOf(campos[0]));
+                banco.setId(Integer.valueOf(campos[0]));
                 banco.setNome(campos[1]);
 
                 System.out.print("- Salvando banco... ");
-                Banco bancoSalva = bancoCrudService.incluir(banco);
-                System.out.println(String.format("Banco salvo, ID %d!", bancoSalva.getIdBacen()));
+                Banco bancoSalvo = bancoCrudService.incluir(banco);
+                System.out.println(String.format("Banco salvo, ID %d!", bancoSalvo.getId()));
             } catch (Exception e) {
                 System.out.println(String.format("Erro ao salvar banco: [%s].", banco));
             }

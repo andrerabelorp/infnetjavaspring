@@ -1,12 +1,16 @@
 package br.edu.infnet.arabeloapi.model.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
+@Entity
 public class Conta implements EntidadeComId<Integer> {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idBanco")
     private Banco banco;
     private TipoConta tipoConta;
     private Long numero;

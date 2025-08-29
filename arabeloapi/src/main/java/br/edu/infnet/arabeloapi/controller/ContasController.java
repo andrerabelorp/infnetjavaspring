@@ -37,8 +37,9 @@ public class ContasController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public void excluir(@PathVariable Integer id) {
+    public ResponseEntity<Void> excluir(@PathVariable Integer id) {
         contaCrudService.excluir(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping

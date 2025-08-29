@@ -17,13 +17,9 @@ public abstract class BaseCrudService<T extends EntidadeComId<ID>, ID> implement
     }
 
     public T obter(ID id) {
-        T entidade = dados.get(id);
-
-        if (entidade == null) {
-            throw new IllegalArgumentException(String.format("Entidade [%s] não encontrada pelo ID.", getEntityTypeName()));
-        }
-
-        return entidade;
+        validarId(id);
+        return repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Entidade [%s] não encontrada pelo ID.", getEntityTypeName())));
     }
 
     public T incluir(T entidade) {
@@ -41,9 +37,8 @@ public abstract class BaseCrudService<T extends EntidadeComId<ID>, ID> implement
     }
 
     public void excluir(ID id) {
-        validarId(id);
         T entidade = obter(id);
         validarExclusao(entidade);
-        dados.remove(id);
+        repository.delete(entidade);
     }
 }

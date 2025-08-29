@@ -2,6 +2,9 @@ package br.edu.infnet.arabeloapi.controller;
 
 import br.edu.infnet.arabeloapi.model.domain.Conta;
 import br.edu.infnet.arabeloapi.service.ContaCrudService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +20,10 @@ public class ContasController {
     }
 
     @PostMapping
-    public Conta incluir(@RequestBody Conta conta) {
-        return contaCrudService.incluir(conta);
+    public ResponseEntity<Conta> incluir(@RequestBody Conta conta) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(contaCrudService.incluir(conta));
     }
 
     @PutMapping(value = "/{id}")
@@ -37,8 +42,12 @@ public class ContasController {
     }
 
     @GetMapping
-    public List<Conta> getContas() {
-        return contaCrudService.obter();
+    public ResponseEntity<List<Conta>> getContas() {
+        List<Conta> contas = contaCrudService.obter();
+        if (ObjectUtils.isEmpty(contas)) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(contas);
     }
 
     @GetMapping("/{id}")

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.List;
 
 @Component
 public class SystemLoader implements ApplicationRunner {
@@ -35,17 +36,24 @@ public class SystemLoader implements ApplicationRunner {
 
         String linha = leitor.readLine();
         String[] campos;
+        List<Banco> bancos = bancoCrudService.obter();
         while (linha != null) {
             campos = linha.split(";");
 
             Banco banco = new Banco();
             try {
-                banco.setId(Integer.valueOf(campos[0]));
+                banco.setCodigoBacen(Integer.valueOf(campos[0]));
                 banco.setNome(campos[1]);
 
-                System.out.print("- Salvando banco... ");
-                Banco bancoSalvo = bancoCrudService.incluir(banco);
-                System.out.println(String.format("Banco salvo, ID %d!", bancoSalvo.getId()));
+                if (bancos.stream()
+                        .filter(bancoEntity -> bancoEntity.getCodigoBacen().equals(banco.getCodigoBacen()))
+                        .findAny().isEmpty()) {
+                    System.out.print("- Salvando banco... ");
+                    Banco bancoSalvo = bancoCrudService.incluir(banco);
+                    System.out.println(String.format("Banco salvo, ID %d!", bancoSalvo.getId()));
+                } else {
+                    System.out.println("- Banco já existe.");
+                }
             } catch (Exception e) {
                 System.out.println(String.format("Erro ao salvar banco: [%s].", banco));
             }
@@ -53,7 +61,7 @@ public class SystemLoader implements ApplicationRunner {
             linha = leitor.readLine();
         }
 
-        System.out.println(String.format("Tamanho lista: %d.", bancoCrudService.obter().size()));
+        System.out.println(String.format("Tamanho lista: %d.", bancos.size()));
 
         leitor.close();
     }
@@ -64,21 +72,25 @@ public class SystemLoader implements ApplicationRunner {
 
         String linha = leitor.readLine();
         String[] campos;
+        List<Banco> bancos = bancoCrudService.obter();
         while (linha != null) {
             campos = linha.split(";");
 
             Conta conta = new Conta();
             try {
-            conta.setId(null);
-            conta.setBanco(bancoCrudService.obter(Integer.valueOf(campos[1])));
-            conta.setNumero(Long.valueOf(campos[2]));
-            conta.setSaldoAtual(Double.valueOf(campos[3]));
-            conta.setAtivo(Boolean.valueOf(campos[4]));
-            conta.setTipoConta(TipoConta.CORRENTE);
+                Integer codigoBanco = Integer.valueOf(campos[1]);
+                conta.setBanco(
+                        bancos.stream()
+                                .filter(banco -> banco.getCodigoBacen().equals(codigoBanco))
+                                .findFirst().get());
+                conta.setNumero(Long.valueOf(campos[2]));
+                conta.setSaldoAtual(Double.valueOf(campos[3]));
+                conta.setAtivo(Boolean.valueOf(campos[4]));
+                conta.setTipoConta(TipoConta.CORRENTE);
 
-            System.out.print("- Salvando conta... ");
-            Conta contaSalva = contaCrudService.incluir(conta);
-            System.out.println(String.format("Conta salva, ID %d!", contaSalva.getId()));
+                System.out.print("- Salvando conta... ");
+                Conta contaSalva = contaCrudService.incluir(conta);
+                System.out.println(String.format("Conta salva, ID %d!", contaSalva.getId()));
             } catch (Exception e) {
                 System.out.println(String.format("Erro ao salvar conta: [%s].", conta));
                 System.out.println(e.getMessage());
@@ -87,7 +99,11 @@ public class SystemLoader implements ApplicationRunner {
             linha = leitor.readLine();
         }
 
-        System.out.println(String.format("Tamanho lista: %d.", contaCrudService.obter().size()));
+        for(Conta conta: contaCrudService.obter()) {
+            System.out.println(String.format("Conta recuperada: %s", conta));
+        }
+
+        contaCrudService.obter().forEach(System.out::println);
 
         leitor.close();
     }

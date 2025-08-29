@@ -8,7 +8,7 @@ import lombok.Data;
 public abstract class Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    protected Integer id;
 
     private String nome;
 }

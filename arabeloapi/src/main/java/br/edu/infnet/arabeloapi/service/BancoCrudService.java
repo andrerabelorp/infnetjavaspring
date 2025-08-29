@@ -3,6 +3,7 @@ package br.edu.infnet.arabeloapi.service;
 import br.edu.infnet.arabeloapi.model.domain.Banco;
 import br.edu.infnet.arabeloapi.model.domain.exceptions.CampoObrigatorioNaoPreenchidoException;
 import br.edu.infnet.arabeloapi.model.domain.exceptions.EntidadeNaoPodeSerExcluidaException;
+import br.edu.infnet.arabeloapi.repository.BancoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -11,10 +12,8 @@ import java.awt.dnd.InvalidDnDOperationException;
 @Service
 public class BancoCrudService extends BaseCrudService<Banco, Integer> implements CrudService<Banco, Integer> {
 
-    @Override
-    public Banco incluir(Banco entidade) {
-        dados.put(entidade.getCodigoBacen(), entidade);
-        return entidade;
+    public BancoCrudService(BancoRepository bancoRepository) {
+        this.repository = bancoRepository;
     }
 
     @Override
@@ -22,7 +21,7 @@ public class BancoCrudService extends BaseCrudService<Banco, Integer> implements
         if (entidade == null) {
             throw new IllegalArgumentException("Impossível validar entidade \"null\".");
         }
-        if (entidade.getCodigoBacen() <= 0) {
+        if (entidade.getCodigoBacen() == null || entidade.getCodigoBacen() <= 0) {
             throw new CampoObrigatorioNaoPreenchidoException("Código BACEN", "Banco");
         }
         if (entidade.getNome() == null) {

@@ -9,9 +9,11 @@ public class Conta implements EntidadeComId<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idBanco")
+
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "id_banco")
     private Banco banco;
+
     private TipoConta tipoConta;
     private Long numero;
     private String digitoVerificador;
